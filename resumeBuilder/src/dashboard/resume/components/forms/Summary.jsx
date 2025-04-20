@@ -48,6 +48,7 @@ const Summary = ({ enableNext }) => {
 
   const onSave = (e) => {
     e.preventDefault();
+    enableNext(false);
     setLoading(true);
     const data = {
       data: {
@@ -59,11 +60,12 @@ const Summary = ({ enableNext }) => {
       (resp) => {
         setLoading(false);
         toast("Details Updated");
-        //enableNext(true);
+        enableNext(true);
       },
       (error) => {
         setLoading(false);
         toast("Something went wrong");
+        enableNext(true);
       }
     );
   };

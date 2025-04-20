@@ -68,6 +68,7 @@ const Experience = ({ enableNext }) => {
   }, [experienceList]);
 
   const onSave = (e) => {
+    enableNext(false);
     e.preventDefault();
     setLoading(true);
     const data = {
@@ -75,19 +76,22 @@ const Experience = ({ enableNext }) => {
         experience: experienceList.map(({ id, ...item }) => item),
       },
     };
-    GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
+    GlobalApi.UpdateResumeDetail(params?.resumeId, data).then(
       (resp) => {
         console.log(resp.data.data);
         enableNext(true);
         setLoading(false);
         toast(" Details Updated");
+        enableNext(true);
       },
       (error) => {
         setLoading(false);
         toast("Something went wrong");
         console.error("Save error:", error.response?.data || error);
+        enableNext(true);
       }
     );
+    enableNext(true);
   };
 
   return (

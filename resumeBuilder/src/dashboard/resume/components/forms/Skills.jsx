@@ -43,11 +43,12 @@ const Skills = ({ enableNext }) => {
     setSkillList(newEntries);
   };
   const onSave = (e) => {
+    enableNext(false);
     e.preventDefault();
     setLoading(true);
     const data = {
       data: {
-        skills: skillList,
+        skills: skillList.map(({ id, ...item }) => item),
       },
     };
     GlobalApi.UpdateResumeDetail(params.resumeId, data).then(
@@ -55,13 +56,16 @@ const Skills = ({ enableNext }) => {
         console.log(resp.data.data);
         setLoading(false);
         toast(" Details Updated");
+        enableNext(true);
       },
       (error) => {
         setLoading(false);
         toast("Something went wrong");
         console.error("Save error:", error.response?.data || error);
+        enableNext(true);
       }
     );
+    enableNext(true);
   };
 
   useEffect(() => {

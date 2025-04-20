@@ -30,6 +30,7 @@ const PersonalDetail = ({ enableNext }) => {
   };
 
   const onSave = (e) => {
+    enableNext(false);
     e.preventDefault();
     setLoading(true);
     const data = {
@@ -41,11 +42,13 @@ const PersonalDetail = ({ enableNext }) => {
         //console.log(resp);
         setLoading(false);
         toast(" Details Updated");
+        enableNext(true);
       },
       (error) => {
         setLoading(false);
         console.log(error);
         toast("Something went wrong");
+        enableNext(true);
       }
     );
   };
@@ -128,8 +131,6 @@ const PersonalDetail = ({ enableNext }) => {
           </Button>
         </div>
       </form>
-
-      <Summary />
     </div>
   );
 };
